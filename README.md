@@ -1,4 +1,4 @@
-# SoftDevOthello
+# Othello-GUI
 Use google sheet for Data management.
 
 Gradleを使用しています。
