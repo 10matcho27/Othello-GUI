@@ -147,7 +147,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userSelectPanel.add(msg2);
 
         selectButton1.addActionListener(e -> {
-            System.out.println(text1.getText());
+            //System.out.println(text1.getText());
             existBlack.set(findUser(text1.getText(),1));
             if(existBlack.get()){
                 msg1.setVisible(true);
@@ -173,7 +173,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         });
 
         selectButton2.addActionListener(e -> {
-            System.out.println(text2.getText());
+            //System.out.println(text2.getText());
             existWhite.set(findUser(text2.getText(),2));
             if(existWhite.get()){
                 msg2.setVisible(true);

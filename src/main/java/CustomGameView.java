@@ -93,7 +93,7 @@ public class CustomGameView extends JPanel {
                 str = "Winner : Black, " + blackUser[0] + " !!";
                 //結果保存？
                 //debug
-                System.out.println("win" + blackUser[1] + "lose" + whiteUser[3]);
+                //System.out.println("win" + blackUser[1] + "lose" + whiteUser[3]);
                 //
                 win = Integer.parseInt(blackUser[1]);
                 win ++;
@@ -102,7 +102,7 @@ public class CustomGameView extends JPanel {
                 lose ++;
                 whiteUser[3] = String.valueOf(lose);
                 //debug
-                System.out.println("win" + blackUser[1] + "lose" + whiteUser[3]);
+                //System.out.println("win" + blackUser[1] + "lose" + whiteUser[3]);
                 //
             } else {
                 if (judgeWin() == 0) {
@@ -110,7 +110,7 @@ public class CustomGameView extends JPanel {
                     str = "Draw";
                     //結果保存？
                     //debug
-                    System.out.println("draw" + blackUser[2] + "draw" + whiteUser[2]);
+                    //System.out.println("draw" + blackUser[2] + "draw" + whiteUser[2]);
                     //
                     lose = Integer.parseInt(blackUser[2]);
                     lose ++;
@@ -119,14 +119,14 @@ public class CustomGameView extends JPanel {
                     lose ++;
                     whiteUser[2] = String.valueOf(lose);
                     //debug
-                    System.out.println("draw" + blackUser[2] + "draw" + whiteUser[2]);
+                    //System.out.println("draw" + blackUser[2] + "draw" + whiteUser[2]);
                     //
                 } else {
                     //白
                     str = "Winner : White, " + whiteUser[0] + " !!";
                     //結果保存？
                     //debug
-                    System.out.println("lose" + blackUser[3] + "win" + whiteUser[1]);
+                    //System.out.println("lose" + blackUser[3] + "win" + whiteUser[1]);
                     //
                     win = Integer.parseInt(whiteUser[1]);
                     win ++;
@@ -135,7 +135,7 @@ public class CustomGameView extends JPanel {
                     lose ++;
                     blackUser[3] = String.valueOf(lose);
                     //debug
-                    System.out.println("lose" + blackUser[3] + "win" + whiteUser[1]);
+                    //System.out.println("lose" + blackUser[3] + "win" + whiteUser[1]);
                     //
                 }
             }

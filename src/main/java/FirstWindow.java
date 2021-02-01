@@ -55,7 +55,7 @@ public class FirstWindow extends JPanel {
         g.setFont(font3);
         int row = 0;
         for(int i=0;i<users.size();i++){
-            System.out.println(users.get(i)[0]);
+            //System.out.println(users.get(i)[0]);
             g.setColor(Color.pink);
             g.drawString("\n・" + users.get(i)[0] + ", win : " + users.get(i)[1] + ", draw : " + users.get(i)[2] + ", lose : " + users.get(i)[3], width / 2 - width_str1 / 2 -140, (190 + row));
             row += 23;
