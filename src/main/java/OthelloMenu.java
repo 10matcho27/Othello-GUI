@@ -30,7 +30,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
     public OthelloMenu() {
 
         /*
-        最初の表示画面の設定
+        settings -firstWindow
          */
         FirstWindow panel1 = new FirstWindow();
         panel1.setUsers(users);
@@ -49,7 +49,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
 
 
         /*
-        ユーザ登録画面の設定
+        settings -userCreate
          */
         JPanel userCreatePanel = new JPanel();
         JTextField text = new JTextField(20);
@@ -63,7 +63,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         JPopupMenu popup1 = new JPopupMenu();
         JMenuItem createdPop = new JMenuItem();
         createdPop.setFont(new Font("MS UI Gothic", Font.PLAIN, 12));
-        createdPop.setText("ユーザーを作成しました。");
+        createdPop.setText("User Create Success!");
         createdPop.setBackground(Color.pink);
         popup1.add(createdPop);
         createButton.addActionListener(e -> {
@@ -83,8 +83,6 @@ public class OthelloMenu extends JFrame implements ActionListener {
             temp[2] = "0";
             temp[3] = "0";
             users.put(users.size(),temp);
-            //System.out.println("入力されたユーザ「" + text.getText() + "」を作成しました。");
-            //System.out.println(users);
             popup1.show(contentPane,150,0);
             userIn();
             panel1.setUsers(users);
@@ -95,7 +93,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userCreatePanel.add(backFirstWindow1);
 
         /*
-        ユーザ選択画面の設定
+        settings -userSelect
          */
         AtomicBoolean existBlack = new AtomicBoolean(false);
         AtomicBoolean existWhite = new AtomicBoolean(false);
@@ -192,7 +190,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userSelectPanel.add(backFirstWindow2);
 
         /*
-        ゲーム画面の設定
+        settings -gamePanel
          */
         JButton backFirst = new JButton("Back");
         backFirst.addActionListener(e -> {
@@ -202,9 +200,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
             layout.show(contentPane,"firstWindow");
         });
         JButton btnReset = new JButton("Reset");
-        btnReset.addActionListener(e -> {
-            gamePanel.reset();
-        });
+        btnReset.addActionListener(e -> gamePanel.reset());
         gamePanel.add(backFirst);
         gamePanel.add(btnReset);
         gamePanel.addMouseListener(new MouseAdapter() {
@@ -229,10 +225,6 @@ public class OthelloMenu extends JFrame implements ActionListener {
         //users
         userIn();
         panel1.setUsers(users);
-
-        /*panel01.setBlackUser、whiteUserにアクセス。書き込む。
-        ついでにusersも渡して、CustomGameView側でファイルの出力同期処理を行う。
-        */
 
     }
 
@@ -261,7 +253,6 @@ public class OthelloMenu extends JFrame implements ActionListener {
     }
 
     public static void fileIO(){
-        String str = "";
         File newFile = new File("src/main/resources/data.in");
         try {
             newFile.createNewFile();
@@ -278,7 +269,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
             int count = 0;
             while ((temp = br.readLine()) != null) {
                 //System.out.println(temp);
-                String[] splitTempList = (String.valueOf(temp)).split(",");
+                String[] splitTempList = (temp).split(",");
                 if(splitTempList[0] != null) {
                     users.put(count,splitTempList);
                     count++;

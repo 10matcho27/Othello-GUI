@@ -3,22 +3,19 @@ import java.awt.*;
 import java.io.*;
 import java.security.GeneralSecurityException;
 import java.util.*;
-import java.util.List;
+
 
 
 public class FirstWindow extends JPanel {
     static final int width = 500;//画面の幅
     static final int height = 550;//画面の高さ
-    static final int UserLimit = 20;//これぐらいにしておいてほしいなあ
     Map<Integer, String[]> users = new HashMap<>();
 
     //コンストラクタ
     public  FirstWindow(){
         try {
             dataSync();
-        } catch (GeneralSecurityException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (GeneralSecurityException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -30,7 +27,6 @@ public class FirstWindow extends JPanel {
 
     @Override
     public void paintComponent(Graphics g0) {
-        String[] name = new String[UserLimit];
         //背景
         Graphics2D g = (Graphics2D) g0;
         g.setColor(Color.darkGray);
@@ -57,7 +53,7 @@ public class FirstWindow extends JPanel {
         for(int i=0;i<users.size();i++){
             //System.out.println(users.get(i)[0]);
             g.setColor(Color.pink);
-            g.drawString("\n・" + users.get(i)[0] + ", win : " + users.get(i)[1] + ", draw : " + users.get(i)[2] + ", lose : " + users.get(i)[3], width / 2 - width_str1 / 2 -140, (190 + row));
+            g.drawString("#" + users.get(i)[0] + "   , win : " + users.get(i)[1] + ", draw : " + users.get(i)[2] + ", lose : " + users.get(i)[3], width / 2 - width_str1 / 2 -130, (190 + row));
             row += 23;
         }
 
