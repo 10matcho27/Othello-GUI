@@ -1,2 +1,3 @@
 /tokens/
-/src/main/resources/
+/src/main/resources/credentials.json
+/src/main/resources/data.in
