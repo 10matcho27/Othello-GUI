@@ -2,6 +2,7 @@
 Use google sheet for Data management.
 
 Gradleを使用しています。
+コーディングにはUTF-8を使用しています。
 
 下にアクセスして、１のGoogle Sheets APIを有効にしてください。
 https://developers.google.com/sheets/api/quickstart/java
