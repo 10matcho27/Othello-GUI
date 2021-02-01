@@ -6,11 +6,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class PanelChangeTest extends JFrame implements ActionListener {
+public class OthelloMenu extends JFrame implements ActionListener {
 
     JPanel contentPane;
     CardLayout layout;
@@ -19,7 +18,7 @@ public class PanelChangeTest extends JFrame implements ActionListener {
     String[] whiteUser = new String[4];
 
     public static void main(String[] args) {
-        PanelChangeTest frame = new PanelChangeTest();
+        OthelloMenu frame = new OthelloMenu();
         frame.setTitle("Othello");
         frame.setSize(500, 600);
         frame.setLocationRelativeTo(null);
@@ -28,7 +27,7 @@ public class PanelChangeTest extends JFrame implements ActionListener {
         fileIO();
     }
 
-    public PanelChangeTest() {
+    public OthelloMenu() {
 
         /*
         最初の表示画面の設定
