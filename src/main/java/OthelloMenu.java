@@ -43,12 +43,16 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userSelect.addActionListener(e -> {
             layout.show(contentPane,"userSelectPanel");
         });
+
+        /*
         JButton userDelete = new JButton("User Delete");
         userDelete.addActionListener(e -> {
             layout.show(contentPane,"userDeletePanel");
         });
+         */
+
         panel1.add(userCreate);
-        panel1.add(userDelete);
+        //panel1.add(userDelete);
         panel1.add(userSelect);
 
 
@@ -61,6 +65,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         JButton backFirstWindow1 = new JButton("Back");
         backFirstWindow1.addActionListener(e -> {
             userIn();
+            text.setText("");
             panel1.setUsers(users);
             layout.show(contentPane,"firstWindow");
         });
@@ -99,6 +104,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
 
             popup1.show(contentPane,150,0);
             userIn();
+            text.setText("");
             panel1.setUsers(users);
             layout.show(contentPane,"firstWindow");
         });
@@ -106,6 +112,10 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userCreatePanel.add(createButton);
         userCreatePanel.add(backFirstWindow1);
 
+        /*
+        settings -userDelete
+         */
+        /*
         JPanel userDeletePanel = new JPanel();
         AtomicBoolean existPerson = new AtomicBoolean(false);
         JTextField textDel = new JTextField(20);
@@ -126,7 +136,15 @@ public class OthelloMenu extends JFrame implements ActionListener {
             existPerson.set(findUser(textDel.getText(),-1));
             if(existPerson.get()){
                 //from users -> to data.in <write>
+                String[] emptyUser = new String[4];
+                emptyUser[0] = "-empty-";
+                emptyUser[1] = "-";
+                emptyUser[2] = "-";
+                emptyUser[3] = "-";
+                int key = users.size()+1;
+                users.put(key,emptyUser);
                 fileWriter();
+                users.remove(key);
                 try {
                     dataSyncUpload();
                 } catch (GeneralSecurityException eDel) {
@@ -144,30 +162,27 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userDeletePanel.add(textDel);
         userDeletePanel.add(deleteButton);
         userDeletePanel.add(backFirstWindow2);
+         */
 
         /*
         settings -userSelect
          */
         AtomicBoolean existBlack = new AtomicBoolean(false);
         AtomicBoolean existWhite = new AtomicBoolean(false);
-        JPanel userSelectPanel = new JPanel();
-        userSelectPanel.setBounds(50,50,400,400);
-        JButton toGame = new JButton("Game Start");
-        JButton backFirstWindow3 = new JButton("Back");
-        backFirstWindow3.addActionListener(e -> {
-            userIn();
-            panel1.setUsers(users);
-            layout.show(contentPane,"firstWindow");
-        });
-        toGame.setVisible(false);
-        JButton selectButton1 = new JButton("Black select");
-        JButton selectButton2 = new JButton("White select");
         JTextField text1 = new JTextField(20);
         JTextField text2 = new JTextField(20);
+        JPanel userSelectPanel = new JPanel();
+        userSelectPanel.setBounds(50,50,400,400);
+        JButton selectButton1 = new JButton("Black select");
+        JButton selectButton2 = new JButton("White select");
         userSelectPanel.add(text1);
         userSelectPanel.add(selectButton1);
         userSelectPanel.add(text2);
         userSelectPanel.add(selectButton2);
+        JButton toGame = new JButton("Game Start");
+
+        JButton backFirstWindow3 = new JButton("Back");
+        toGame.setVisible(false);
 
         JLabel msg = new JLabel("You should chose black and white correctly.");
         JLabel blank = new JLabel("");
@@ -196,6 +211,17 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userSelectPanel.add(msg01);
         userSelectPanel.add(msg1);
         userSelectPanel.add(msg2);
+        userSelectPanel.add(backFirstWindow3);
+
+        backFirstWindow3.addActionListener(e -> {
+            userIn();
+            existBlack.set(false);
+            existWhite.set(false);
+            text1.setText("");
+            text2.setText("");
+            panel1.setUsers(users);
+            layout.show(contentPane,"firstWindow");
+        });
 
         selectButton1.addActionListener(e -> {
             //System.out.println(text1.getText());
@@ -220,6 +246,10 @@ public class OthelloMenu extends JFrame implements ActionListener {
             gamePanel.setUsers(users);
             gamePanel.setBlackUser(blackUser);
             gamePanel.setWhiteUser(whiteUser);
+            text1.setText("");
+            text2.setText("");
+            existBlack.set(false);
+            existWhite.set(false);
             layout.show(contentPane,"gamePanel");
         });
 
@@ -240,14 +270,16 @@ public class OthelloMenu extends JFrame implements ActionListener {
             }
         });
 
-        userSelectPanel.add(backFirstWindow3);
-
         /*
         settings -gamePanel
          */
         JButton backFirst = new JButton("Back");
         backFirst.addActionListener(e -> {
             gamePanel.reset();
+            text1.setText("");
+            text2.setText("");
+            existBlack.set(false);
+            existWhite.set(false);
             userIn();
             panel1.setUsers(users);
             layout.show(contentPane,"firstWindow");
@@ -269,7 +301,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
 
         contentPane.add(panel1,"firstWindow");
         contentPane.add(userCreatePanel,"userCreatePanel");
-        contentPane.add(userDeletePanel,"userDeletePanel");
+        //contentPane.add(userDeletePanel,"userDeletePanel");
         contentPane.add(userSelectPanel,"userSelectPanel");
         contentPane.add(gamePanel,"gamePanel");
 
@@ -296,6 +328,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
                     blackUser = users.get(i);
                     //System.out.println(blackUser[2]);
                 }else{
+                    /*
                     if(borw == 2) {
                         whiteUser = users.get(i);
                         //System.out.println(whiteUser[2]);
@@ -303,6 +336,8 @@ public class OthelloMenu extends JFrame implements ActionListener {
                         //only for finding person
                         users.remove(i);
                     }
+                     */
+                    whiteUser = users.get(i);
                 }
                 //users.remove(i);
                 return true;
@@ -330,10 +365,18 @@ public class OthelloMenu extends JFrame implements ActionListener {
             while ((temp = br.readLine()) != null) {
                 //System.out.println(temp);
                 String[] splitTempList = (temp).split(",");
-                if(splitTempList[0] != null) {
+                /*
+                if(splitTempList[0] != null && !splitTempList[0].equals("-empty-")) {
                     users.put(count,splitTempList);
                     count++;
-                }else{
+                }
+
+                 */
+                if(splitTempList[0] != null){
+                    users.put(count,splitTempList);
+                    count++;
+                }
+                else{
                     break;
                 }
             }
@@ -345,7 +388,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
     public void fileWriter(){
         try{
             PrintWriter pw = new PrintWriter("src/main/resources/data.in");
-            for ( int i=0; i < users.size();i++ ) {
+            for ( int i=0; i <= users.size(); i++ ) {
                 if(users.get(i)!=null) {
                     String[] temp = users.get(i);
                     pw.println(temp[0] + "," + temp[1] + "," + temp[2] + "," + temp[3]);

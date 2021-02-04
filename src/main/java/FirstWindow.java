@@ -48,8 +48,12 @@ public class FirstWindow extends JPanel {
         for(int i=0;i<users.size();i++){
             //System.out.println(users.get(i)[0]);
             g.setColor(Color.pink);
-            g.drawString("#" + users.get(i)[0] + "   , win : " + users.get(i)[1] + ", draw : " + users.get(i)[2] + ", lose : " + users.get(i)[3], width / 2 - width_str1 / 2 -130, (190 + row));
-            row += 23;
+            if(users.get(i) != null) {
+                if (!users.get(i).equals("-empty-")) {
+                    g.drawString("#" + users.get(i)[0] + "   , win : " + users.get(i)[1] + ", draw : " + users.get(i)[2] + ", lose : " + users.get(i)[3], width / 2 - width_str1 / 2 - 130, (190 + row));
+                    row += 23;
+                }
+            }
         }
 
     }
