@@ -20,6 +20,8 @@ public class CustomGameView extends JPanel {
     String[] blackUser = new String[4];
     String[] whiteUser = new String[4];
 
+
+    //setter
     public void setUsers(Map<Integer, String[]> users){
         this.users = users;
     }

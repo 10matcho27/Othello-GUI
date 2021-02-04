@@ -20,11 +20,6 @@ public class FirstWindow extends JPanel {
         }
     }
 
-
-
-    //setBlackUser、WhiteUserのメゾットを作成。こっちにプレイや情報を移す。
-    //データ登録のクラス作成。
-
     @Override
     public void paintComponent(Graphics g0) {
         //背景

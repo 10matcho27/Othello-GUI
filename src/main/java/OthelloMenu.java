@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.*;
+import java.security.GeneralSecurityException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -36,15 +37,18 @@ public class OthelloMenu extends JFrame implements ActionListener {
         panel1.setUsers(users);
         JButton userCreate = new JButton("User Create");
         userCreate.addActionListener(e -> {
-            //panel1.setUserCreateModeSwitch();
             layout.show(contentPane,"userCreatePanel");
         });
         JButton userSelect = new JButton("User Select");
         userSelect.addActionListener(e -> {
-            //panel1.setUserCreateModeSwitch();
             layout.show(contentPane,"userSelectPanel");
         });
+        JButton userDelete = new JButton("User Delete");
+        userDelete.addActionListener(e -> {
+            layout.show(contentPane,"userDeletePanel");
+        });
         panel1.add(userCreate);
+        panel1.add(userDelete);
         panel1.add(userSelect);
 
 
@@ -63,7 +67,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         JPopupMenu popup1 = new JPopupMenu();
         JMenuItem createdPop = new JMenuItem();
         createdPop.setFont(new Font("MS UI Gothic", Font.PLAIN, 12));
-        createdPop.setText("User Create Success!");
+        createdPop.setText("User Create & Sync Success!");
         createdPop.setBackground(Color.pink);
         popup1.add(createdPop);
         createButton.addActionListener(e -> {
@@ -83,6 +87,16 @@ public class OthelloMenu extends JFrame implements ActionListener {
             temp[2] = "0";
             temp[3] = "0";
             users.put(users.size(),temp);
+
+            //Data Sync(upload)
+            try {
+                dataSyncUpload();
+            } catch (GeneralSecurityException generalSecurityException) {
+                generalSecurityException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+
             popup1.show(contentPane,150,0);
             userIn();
             panel1.setUsers(users);
@@ -92,6 +106,45 @@ public class OthelloMenu extends JFrame implements ActionListener {
         userCreatePanel.add(createButton);
         userCreatePanel.add(backFirstWindow1);
 
+        JPanel userDeletePanel = new JPanel();
+        AtomicBoolean existPerson = new AtomicBoolean(false);
+        JTextField textDel = new JTextField(20);
+        JButton deleteButton = new JButton("Delete");
+        JButton backFirstWindow2 = new JButton("Back");
+        backFirstWindow2.addActionListener(e -> {
+            layout.show(contentPane,"firstWindow");
+        });
+        JPopupMenu popup2 = new JPopupMenu();
+        JMenuItem createdPopDel = new JMenuItem();
+        createdPop.setFont(new Font("MS UI Gothic", Font.PLAIN, 12));
+        createdPop.setText("User Delete & Sync Success!");
+        createdPop.setBackground(Color.pink);
+        popup1.add(createdPopDel);
+        deleteButton.addActionListener(e -> {
+
+            //if textDel (person) exist, findUser delete the person from users (HashMap).
+            existPerson.set(findUser(textDel.getText(),-1));
+            if(existPerson.get()){
+                //from users -> to data.in <write>
+                fileWriter();
+                try {
+                    dataSyncUpload();
+                } catch (GeneralSecurityException eDel) {
+                    eDel.printStackTrace();
+                } catch (IOException eDel) {
+                    eDel.printStackTrace();
+                }
+                userIn();
+                panel1.setUsers(users);
+                popup1.show(contentPane,150,0);
+                layout.show(contentPane,"firstWindow");
+                existPerson.set(false);
+            }
+        });
+        userDeletePanel.add(textDel);
+        userDeletePanel.add(deleteButton);
+        userDeletePanel.add(backFirstWindow2);
+
         /*
         settings -userSelect
          */
@@ -100,8 +153,8 @@ public class OthelloMenu extends JFrame implements ActionListener {
         JPanel userSelectPanel = new JPanel();
         userSelectPanel.setBounds(50,50,400,400);
         JButton toGame = new JButton("Game Start");
-        JButton backFirstWindow2 = new JButton("Back");
-        backFirstWindow2.addActionListener(e -> {
+        JButton backFirstWindow3 = new JButton("Back");
+        backFirstWindow3.addActionListener(e -> {
             userIn();
             panel1.setUsers(users);
             layout.show(contentPane,"firstWindow");
@@ -187,7 +240,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
             }
         });
 
-        userSelectPanel.add(backFirstWindow2);
+        userSelectPanel.add(backFirstWindow3);
 
         /*
         settings -gamePanel
@@ -216,6 +269,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
 
         contentPane.add(panel1,"firstWindow");
         contentPane.add(userCreatePanel,"userCreatePanel");
+        contentPane.add(userDeletePanel,"userDeletePanel");
         contentPane.add(userSelectPanel,"userSelectPanel");
         contentPane.add(gamePanel,"gamePanel");
 
@@ -242,8 +296,13 @@ public class OthelloMenu extends JFrame implements ActionListener {
                     blackUser = users.get(i);
                     //System.out.println(blackUser[2]);
                 }else{
-                    whiteUser = users.get(i);
-                    //System.out.println(whiteUser[2]);
+                    if(borw == 2) {
+                        whiteUser = users.get(i);
+                        //System.out.println(whiteUser[2]);
+                    }else{
+                        //only for finding person
+                        users.remove(i);
+                    }
                 }
                 //users.remove(i);
                 return true;
@@ -251,6 +310,7 @@ public class OthelloMenu extends JFrame implements ActionListener {
         }
         return false;
     }
+
 
     public static void fileIO(){
         File newFile = new File("src/main/resources/data.in");
@@ -280,6 +340,26 @@ public class OthelloMenu extends JFrame implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void fileWriter(){
+        try{
+            PrintWriter pw = new PrintWriter("src/main/resources/data.in");
+            for ( int i=0; i < users.size();i++ ) {
+                if(users.get(i)!=null) {
+                    String[] temp = users.get(i);
+                    pw.println(temp[0] + "," + temp[1] + "," + temp[2] + "," + temp[3]);
+                }
+            }
+            pw.close();
+        }catch (IOException ex){
+            ex.printStackTrace();
+        }
+    }
+
+    public void dataSyncUpload() throws GeneralSecurityException, IOException{
+        DataSyncOutput dataOut = new DataSyncOutput("1BQl_z8DSzFL2LEPp0UAK_0vVbfKmJ9oqnZmwrnv3Q_o");
+        dataOut.writeTest("sheet1!A2");
     }
 
 }
