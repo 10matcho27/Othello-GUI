@@ -215,10 +215,6 @@ public class OthelloMenu extends JFrame implements ActionListener {
 
         backFirstWindow3.addActionListener(e -> {
             userIn();
-            existBlack.set(false);
-            existWhite.set(false);
-            text1.setText("");
-            text2.setText("");
             panel1.setUsers(users);
             layout.show(contentPane,"firstWindow");
         });
@@ -246,10 +242,6 @@ public class OthelloMenu extends JFrame implements ActionListener {
             gamePanel.setUsers(users);
             gamePanel.setBlackUser(blackUser);
             gamePanel.setWhiteUser(whiteUser);
-            text1.setText("");
-            text2.setText("");
-            existBlack.set(false);
-            existWhite.set(false);
             layout.show(contentPane,"gamePanel");
         });
 
@@ -276,10 +268,6 @@ public class OthelloMenu extends JFrame implements ActionListener {
         JButton backFirst = new JButton("Back");
         backFirst.addActionListener(e -> {
             gamePanel.reset();
-            text1.setText("");
-            text2.setText("");
-            existBlack.set(false);
-            existWhite.set(false);
             userIn();
             panel1.setUsers(users);
             layout.show(contentPane,"firstWindow");
