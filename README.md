@@ -17,7 +17,7 @@ https://developers.google.com/sheets/api/quickstart/java
 
 手順に従い、DOWNLOAD CLIENT CONFIGURATIONをクリックしてcredentials.jsonをダウンロード。
 
-src/main 以下に resouecesファイルを作成し、その中にダウンロードしたcredentials.jsonを貼り付けてください。
+src/main 以下に resouecesディレクトリを作成し、その中にダウンロードしたcredentials.jsonを貼り付けてください。
 
 src/main/java/OthelloMenuを実行するとブラウザが立ち上がります。
 初回起動時にはアクセス許可が必要です。
